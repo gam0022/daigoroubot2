@@ -1,0 +1,1 @@
+rsync --iconv=UTF-8-MAC,UTF-8 -avzc --delete --exclude-from=rsync-exclude ./ g22:/home/gam0022/daigoroubot2
