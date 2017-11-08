@@ -36,7 +36,7 @@ class Gobi
     end
 
     nodes.each do |node|
-      puts node
+      #puts node
 
       prev_feature = node.feature
       feature = node.feature

@@ -2,6 +2,7 @@
 
 require 'yaml'
 require 'twitter'
+require 'pp'
 
 require_relative '../lib/markov_chain'
 require_relative '../lib/gobi'
@@ -19,15 +20,24 @@ client = Twitter::REST::Client.new do |c|
   c.access_token_secret = config['oauth']['access_token_secret']
 end
 
-keyword = "動物"
+keyword = client.trends(id = config['woeid']).to_a.sample.name
+puts "keyword: #{keyword}"
 
 summary = Summary.new
 
 client.search("#{keyword} -rt -filter:links ", lang: "ja").take(10).collect do |tweet|
-  puts "#{tweet.user.screen_name}: #{tweet.text}"
+  #puts "#{tweet.user.screen_name}: #{tweet.text}"
   summary.learn(tweet.text.filter)
 end
 
-result = summary.talk()
-puts result
-puts Gobi.gobi(result)
+10.times do |i|
+  puts "try: #{i + 1}"
+  result = summary.talk()
+  result = Gobi.gobi(result)
+  puts "result: #{result} (#{result.length}文字)"
+  if result.length < 50
+    puts "update tweet"
+    client.update(result)
+    break
+  end
+end
