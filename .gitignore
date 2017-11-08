@@ -6,3 +6,4 @@
 *.backup
 
 config.yaml
+crontab
