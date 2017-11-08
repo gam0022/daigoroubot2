@@ -38,11 +38,11 @@ class Gobi
     nodes.each do |node|
       #puts node
 
-      prev_feature = node.feature
-      feature = node.feature
+      prev_feature = feature
+      feature = node.feature.scrub("")
 
-      prev_surface = node.surface
-      surface = node.surface
+      prev_surface = surface
+      surface = node.surface.scrub("")
 
       if !prev_nanoda && prev_feature =~ /基本形/ && fin?(surface, feature)
         buf += prev_surface + 'のだ！'
