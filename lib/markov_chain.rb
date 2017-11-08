@@ -3,8 +3,6 @@
 ENV['MECAB_PATH'] = '/usr/lib/libmecab.so.2'
 require 'natto'
 
-require 'kconv'
-
 #
 # 直前の1単語によるマルコフ連鎖
 #
@@ -49,7 +47,7 @@ class Summary
     end
 
     # EOSを削除して、結果出力
-    new_text.gsub!(/EOS$/,'').toutf8
+    new_text.gsub!(/EOS$/,'')
   end
 
 end
@@ -101,7 +99,7 @@ class Summary2
     end
 
     # EOSを削除して、結果出力
-    new_text.gsub!(/EOS$/,'').toutf8
+    new_text.gsub!(/EOS$/,'')
   end
 
 end

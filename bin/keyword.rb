@@ -19,7 +19,7 @@ client = Twitter::REST::Client.new do |c|
   c.access_token_secret = config['oauth']['access_token_secret']
 end
 
-keyword = "ガチャ"
+keyword = "動物"
 
 summary = Summary.new
 
