@@ -36,7 +36,7 @@ class Gobi
     end
 
     nodes.each do |node|
-      #puts node
+      puts "#{node.surface}\t#{node.feature}"
 
       prev_feature = feature
       feature = node.feature.scrub("")

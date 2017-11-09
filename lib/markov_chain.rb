@@ -85,17 +85,17 @@ class Summary2
     t2 = head['middle']
     new_text = t1.eappend t2  
     while true
-      _a = []
-      @data.each do |hash|
-        _a.push hash if hash['head'] == t1 && hash['middle'] == t2
+      choices = []
+      @data.each do |node|
+        choices.push node if node['head'] == t1 && node['middle'] == t2
       end 
 
-      break if _a.size == 0
-      num = rand(_a.size) # 乱数で次の文節を決定する
-      new_text = new_text.eappend _a[num]['end']
-      break if _a[num]['end'] == ""
-      t1 = _a[num]['middle']
-      t2 = _a[num]['end']
+      break if choices.size == 0
+      selection = choices.sample
+      new_text = new_text.eappend selection['end']
+      break if selection['end'] == ""
+      t1 = selection['middle']
+      t2 = selection['end']
     end
 
     new_text
