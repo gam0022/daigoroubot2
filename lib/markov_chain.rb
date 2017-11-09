@@ -18,7 +18,7 @@ class Summary
   def learn(text)
     # mecabで形態素解析して、 参照テーブルを作る
     ary = []
-    @mecab.parse(text + " EOS") do |n|
+    @mecab.parse(text) do |n|
       ary << n.surface
     end
 
@@ -42,12 +42,11 @@ class Summary
       break if _a.size == 0
       num = rand(_a.size) # 乱数で次の文節を決定する
       new_text = new_text.eappend _a[num]['end']
-      break if _a[num]['end'] == "EOS"
+      break if _a[num]['end'] == ""
       t1 = _a[num]['end']
     end
 
-    # EOSを削除して、結果出力
-    new_text.gsub!(/EOS$/,'')
+    new_text
   end
 
 end
@@ -68,8 +67,9 @@ class Summary2
   def learn(text)
     # mecabで形態素解析して、 参照テーブルを作る
     ary = []
-    @mecab.parse(text + " EOS") do |n|
+    @mecab.parse(text) do |n|
       ary << n.surface
+      puts "#{n.surface}\t#{n.feature}"
     end
 
     @heads.push ({'head' => ary[0], 'middle' => ary[1]})
@@ -93,13 +93,12 @@ class Summary2
       break if _a.size == 0
       num = rand(_a.size) # 乱数で次の文節を決定する
       new_text = new_text.eappend _a[num]['end']
-      break if _a[num]['end'] == "EOS"
+      break if _a[num]['end'] == ""
       t1 = _a[num]['middle']
       t2 = _a[num]['end']
     end
 
-    # EOSを削除して、結果出力
-    new_text.gsub!(/EOS$/,'')
+    new_text
   end
 
 end
