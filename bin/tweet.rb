@@ -7,6 +7,8 @@ require 'pp'
 require_relative '../lib/markov_chain'
 require_relative '../lib/gobi'
 
+puts "#{Time.new}"
+
 config = {}
 
 open("config.yaml") do |f|
@@ -25,19 +27,27 @@ puts "keyword: #{keyword}"
 
 summary = Summary.new
 
-client.search("#{keyword} -rt -filter:links ", lang: "ja").take(10).collect do |tweet|
-  #puts "#{tweet.user.screen_name}: #{tweet.text}"
-  summary.learn(tweet.text.filter)
+
+client.search("#{keyword} -rt -filter:links min_faves:1 min_retweets:0", lang: "ja").take(5).collect do |tweet|
+  puts "@#{tweet.user.screen_name}: #{tweet.text}"
+  if tweet.text =~ /@/
+    puts "ignore. reason: include mention text"
+  else
+    summary.learn(tweet.text.filter)
+  end
 end
 
 10.times do |i|
   puts "try: #{i + 1}"
   result = summary.talk()
   result = Gobi.gobi(result)
+  result = "#{result} #{keyword}" if keyword[0] == "#"
   puts "result: #{result} (#{result.length}文字)"
-  if result.length < 50
+  if result.length < 80
     puts "update tweet"
     client.update(result)
     break
   end
 end
+
+puts
