@@ -40,6 +40,7 @@ end
 10.times do |i|
   puts "try: #{i + 1}"
   result = summary.talk()
+  puts "result(raw): #{result}"
   result = Gobi.gobi(result)
   result = "#{result} #{keyword}" if keyword[0] == "#"
   puts "result: #{result} (#{result.length}文字)"
