@@ -28,7 +28,7 @@ puts "keyword: #{keyword}"
 summary = Summary2.new
 
 
-client.search("#{keyword} -rt -filter:links min_faves:1 min_retweets:0", lang: "ja").take(5).collect do |tweet|
+client.search("#{keyword} -rt -filter:links min_faves:1 min_retweets:0", lang: "ja").take(20).collect do |tweet|
   puts "@#{tweet.user.screen_name}: #{tweet.text}"
   if tweet.text =~ /@/
     puts "ignore. reason: include mention text"
