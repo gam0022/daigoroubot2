@@ -45,19 +45,13 @@ class MarkovChain
     end
 
     while true
-      choices = []
-      @chains.each do |chain|
-        if prefix == chain[0...@n]
-          choices << chain
-        end
-      end 
-
+      choices = @chains.select {|chain| prefix == chain[0...@n]}
       break if choices.size == 0
-      selection = choices.sample
 
-      words << selection[@n]
+      selection = choices.sample
       break if selection[@n] == ""
 
+      words << selection[@n]
       prefix = selection[1..@n]
     end
 
