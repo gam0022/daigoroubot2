@@ -13,9 +13,9 @@ class Gobi
   #
   # 与えられたNodeが文末なのかを判断する
   #
-  def fin?(surface, feature)
-    return true if feature =~ /EOS/
-    return true if surface =~ /( |　|!|！|。)/
+  def fin?(node)
+    return true if node.feature =~ /EOS/
+    return true if node.surface =~ /( |　|!|！|。)/
     return false
   end
 
@@ -27,14 +27,12 @@ class Gobi
 
     nodes = []
     enum.each do |node|
-      surface = node.surface.scrub("")
-      feature = node.feature.scrub("")
-      puts "#{surface}\t#{feature}"
+      puts "#{node.surface}\t#{node.feature}"
 
       nodes << {
-        surface: surface,
-        feature: feature,
-        fin: fin?(surface, feature),
+        surface: node.surface,
+        feature: node.feature,
+        fin: fin?(node),
       }
     end
 
