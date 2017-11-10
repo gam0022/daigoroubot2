@@ -36,14 +36,14 @@ keyword = client.trends(id = config['woeid']).to_a.sample.name
 puts "keyword: #{keyword}"
 
 # learn
-summary = Summary2.new
+mc = MarkovChain.new(2)
 
 client.search("#{keyword} -rt -filter:links min_faves:0 min_retweets:0", lang: "ja", result_type: "recent").take(20).collect do |tweet|
   puts "@#{tweet.user.screen_name}: #{tweet.text}"
   if tweet.text =~ /@/
     puts "ignore. reason: include mention text"
   else
-    summary.learn(tweet.text.filter)
+    mc.learn(tweet.text)
   end
   puts
 end
@@ -53,7 +53,7 @@ gobi = Gobi.new
 # talk
 10.times do |i|
   puts "try: #{i + 1}"
-  result = summary.talk()
+  result = mc.talk()
   puts "result(raw): #{result}"
   result = gobi.translate(result)
   result = "#{result} #{keyword}" if keyword[0] == "#"
