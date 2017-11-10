@@ -4,10 +4,14 @@ ENV['MECAB_PATH'] = '/usr/lib/libmecab.so.2'
 require 'natto'
 
 class Gobi
+  def initialize()
+    @mecab = Natto::MeCab.new
+  end
+
   #
   # 与えられたNodeが文末なのかを判断する
   #
-  def self.fin?(surface, feature)
+  def fin?(surface, feature)
     return true if feature =~ /EOS/
     return true if surface =~ /( |　|!|！|[.]|。)/
     return false
@@ -16,10 +20,7 @@ class Gobi
   #
   # 語尾を変化させる
   #
-  def self.gobi(text)
-
-    # mecabで形態素解析して、 参照テーブルを作る
-    mecab = Natto::MeCab.new
+  def translate(text)
 
     buf = ""
     feature = ""
@@ -28,7 +29,7 @@ class Gobi
     prev_surface = ""
     prev_nanoda = false
 
-    enum = mecab.enum_parse(text)
+    enum = @mecab.enum_parse(text)
 
     nodes = []
     enum.each do |node|

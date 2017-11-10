@@ -49,12 +49,14 @@ client.search("#{keyword} -rt -filter:links min_faves:0 min_retweets:0", lang: "
   puts
 end
 
+gobi = Gobi.new
+
 # talk
 10.times do |i|
   puts "try: #{i + 1}"
   result = summary.talk()
   puts "result(raw): #{result}"
-  result = Gobi.gobi(result)
+  result = gobi.translate(result)
   result = "#{result} #{keyword}" if keyword[0] == "#"
   puts "result: #{result} (#{result.length}文字)"
   if result.length < 80
