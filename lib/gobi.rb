@@ -3,6 +3,8 @@
 ENV['MECAB_PATH'] = '/usr/lib/libmecab.so.2'
 require 'natto'
 
+require_relative 'common'
+
 class Gobi
   def initialize()
     @mecab = Natto::MeCab.new
@@ -13,7 +15,7 @@ class Gobi
   #
   def fin?(surface, feature)
     return true if feature =~ /EOS/
-    return true if surface =~ /( |　|!|！|[.]|。)/
+    return true if surface =~ /( |　|!|！|。)/
     return false
   end
 
@@ -21,42 +23,43 @@ class Gobi
   # 語尾を変化させる
   #
   def translate(text)
-
-    buf = ""
-    feature = ""
-    surface = ""
-    prev_feature = ""
-    prev_surface = ""
-    prev_nanoda = false
-
     enum = @mecab.enum_parse(text)
 
     nodes = []
     enum.each do |node|
-      nodes << node
+      surface = node.surface.scrub("")
+      feature = node.feature.scrub("")
+      puts "#{surface}\t#{feature}"
+
+      nodes << {
+        surface: surface,
+        feature: feature,
+        fin: fin?(surface, feature),
+      }
     end
+
+    words = []
+
+    prev = {
+      surface: "",
+      feature: "",
+      fin: false,
+    }
 
     nodes.each do |node|
-      puts "#{node.surface}\t#{node.feature}"
-
-      prev_feature = feature
-      feature = node.feature.scrub("")
-
-      prev_surface = surface
-      surface = node.surface.scrub("")
-
-      if !prev_nanoda && prev_feature =~ /基本形/ && fin?(surface, feature)
-        buf += prev_surface + 'のだ！'
-        prev_nanoda = true
-      elsif !prev_nanoda && fin?(surface, feature)
-        buf += prev_surface + 'なのだ！'
-        prev_nanoda = true
+      if node[:fin] && !prev[:fin]
+        if prev[:feature] =~ /基本形/
+          words << prev[:surface] + 'のだ！'
+        else
+          words << prev[:surface] + 'なのだ！'
+        end
       else
-        buf = buf.eappend prev_surface
-        prev_nanoda = false
+        words << prev[:surface]
       end
+
+      prev = node
     end
 
-    buf
+    join_as_words(words)
   end 
 end

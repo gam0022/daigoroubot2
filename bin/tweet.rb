@@ -10,7 +10,6 @@ require_relative '../lib/gobi'
 
 puts "#{Time.new}"
 
-
 # parse option
 flag = {
   debug: false,
