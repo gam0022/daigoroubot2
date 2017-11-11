@@ -2,7 +2,7 @@
 
 # 単語配列を連結する。英数字同士はスペースで連結する
 def join_as_words(words)
-  text = ""
+  text = words[0]
 
   words.each_cons(2) do |prev_cur|
     prev, cur = prev_cur
