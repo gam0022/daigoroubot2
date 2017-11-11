@@ -12,7 +12,7 @@ class Gobi
 
   # 与えられたNodeが文末なのかを判断する
   def fin?(node)
-    node.feature =~ /EOS/ || node.surface =~ /( |　|!|！|。)/
+    node.feature =~ /EOS/ || node.surface =~ /( |　|!|！|\?|？|。)/
   end
 
   # 語尾を変化させる
