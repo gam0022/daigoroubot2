@@ -41,7 +41,7 @@ mc = MarkovChain.new(2)
 client.search("#{keyword} -rt -filter:links min_faves:0 min_retweets:0", lang: "ja", result_type: "recent").take(20).collect do |tweet|
   puts "@#{tweet.user.screen_name}: #{tweet.text}"
   if tweet.text =~ /@/
-    puts "ignore. reason: include mention text"
+    puts "[ignore] include mention text"
   else
     mc.learn(tweet.text)
   end

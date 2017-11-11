@@ -13,10 +13,10 @@ class MarkovChain
     @chains = []
   end
 
-  # テキストから余分な文字を取り除く
+  # URLや特殊記号(#,@)を取り除く
+  # パーセントエンコーディングをデコードする
   def filter(text)
-    # エンコードをUTF-8 にして、改行とURLや#ハッシュダグや@メンションは消す
-    text.gsub(/(\n|https?:\S+|from https?:\S+|#)/, "").
+    text.gsub(/(\n|https?:\S+|from https?:\S+|#|@)/, "").
       gsub('&amp;', '&').gsub('&lt;', '<').gsub('&gt;', '>')
   end
 
