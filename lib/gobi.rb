@@ -10,18 +10,12 @@ class Gobi
     @mecab = Natto::MeCab.new
   end
 
-  #
   # 与えられたNodeが文末なのかを判断する
-  #
   def fin?(node)
-    return true if node.feature =~ /EOS/
-    return true if node.surface =~ /( |　|!|！|。)/
-    return false
+    node.feature =~ /EOS/ || node.surface =~ /( |　|!|！|。)/
   end
 
-  #
   # 語尾を変化させる
-  #
   def translate(text)
     nodes = []
     @mecab.parse(text) do |node|
