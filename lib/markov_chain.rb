@@ -16,9 +16,11 @@ class MarkovChain
   # テキストから余分な文字を取り除く
   def filter(text)
     # エンコードをUTF-8 にして、改行とURLや#ハッシュダグや@メンションは消す
-    text.gsub(/(\n|https?:\S+|from https?:\S+|#)/, "").gsub('&amp;', '&').gsub('&lt;', '<').gsub('&gt;', '>').strip
+    text.gsub(/(\n|https?:\S+|from https?:\S+|#)/, "").
+      gsub('&amp;', '&').gsub('&lt;', '<').gsub('&gt;', '>')
   end
-  
+
+  # 文章を学習する
   def learn(text)
     text = filter(text)
 
@@ -35,6 +37,7 @@ class MarkovChain
     end
   end
   
+  # 文章を生成する
   def talk()
     prefix = @heads.sample
     words = prefix[0...@n]
