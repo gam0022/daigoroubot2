@@ -36,13 +36,8 @@ class MarkovChain
   end
   
   def talk()
-    head = @heads.sample
-    prefix = head
-
-    words = []
-    (0...@n).each do |i|
-      words << prefix[i]
-    end
+    prefix = @heads.sample
+    words = prefix[0...@n]
 
     while true
       choices = @chains.select {|chain| prefix == chain[0...@n]}
