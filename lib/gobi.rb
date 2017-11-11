@@ -35,15 +35,10 @@ class Gobi
     end
 
     words = []
+    nodes.each_cons(2) do |prev_cur|
+      prev, cur = prev_cur
 
-    prev = {
-      surface: "",
-      feature: "",
-      fin: false,
-    }
-
-    nodes.each do |node|
-      if node[:fin] && !prev[:fin]
+      if cur[:fin] && !prev[:fin]
         if prev[:feature] =~ /基本形/
           words << prev[:surface] + 'のだ！'
         else
@@ -52,8 +47,6 @@ class Gobi
       else
         words << prev[:surface]
       end
-
-      prev = node
     end
 
     join_as_words(words)
