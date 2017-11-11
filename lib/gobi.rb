@@ -23,10 +23,8 @@ class Gobi
   # 語尾を変化させる
   #
   def translate(text)
-    enum = @mecab.enum_parse(text)
-
     nodes = []
-    enum.each do |node|
+    @mecab.parse(text) do |node|
       puts "#{node.surface}\t#{node.feature}"
 
       nodes << {
