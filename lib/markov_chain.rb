@@ -46,11 +46,11 @@ class MarkovChain
       choices = @chains.select {|chain| prefix == chain[0...@n]}
       break if choices.size == 0
 
-      selection = choices.sample
-      break if selection[@n] == ""
+      choice = choices.sample
+      break if choice[@n] == ""
 
-      words << selection[@n]
-      prefix = selection[1..@n]
+      words << choice[@n]
+      prefix = choice[1..@n]
     end
 
     join_as_words(words)
