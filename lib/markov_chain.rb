@@ -1,8 +1,6 @@
 # coding: utf-8
 
-ENV['MECAB_PATH'] = '/usr/lib/libmecab.so.2'
 require 'natto'
-
 require_relative 'common'
 
 class MarkovChain
