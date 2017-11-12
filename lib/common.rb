@@ -22,13 +22,7 @@ def join_as_words(words)
 end
 
 def load_config()
-  config = {}
-
-  open("config.yaml") do |f|
-    config = YAML.load(f)
-  end
-
-  config
+  YAML.load_file("config.yaml")
 end
 
 def get_client(config)
