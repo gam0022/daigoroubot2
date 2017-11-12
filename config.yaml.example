@@ -7,7 +7,7 @@ oauth:
 # トレンドを取得する際のエリア（ここでは日本を指定）
 woeid: 23424856
 
-# folllow.rb での強制フォロー・強制リムーブしたい user_id
+# folllow.rb で強制フォロー・強制リムーブしたい user_id
 users:
   follow:
   remove:
