@@ -2,7 +2,7 @@
 
 require 'optparse'
 
-require_relative '../lib/common'
+require_relative 'common'
 require_relative '../lib/markov_chain'
 require_relative '../lib/gobi'
 

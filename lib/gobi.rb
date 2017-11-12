@@ -1,7 +1,7 @@
 # coding: utf-8
 
 require 'natto'
-require_relative 'common'
+require_relative 'text_util'
 
 class Gobi
   def initialize()

@@ -4,23 +4,6 @@ require 'yaml'
 require 'twitter'
 require 'pp'
 
-# 単語配列を連結する。英数字同士はスペースで連結する
-def join_as_words(words)
-  text = words[0]
-
-  words.each_cons(2) do |prev_cur|
-    prev, cur = prev_cur
-
-    if prev =~ /[\w\d]+/ && cur =~ /[\w\d]+/
-      text += " " + cur
-    else
-      text += cur
-    end
-  end
-
-  text
-end
-
 def load_config()
   YAML.load_file("config.yaml")
 end
