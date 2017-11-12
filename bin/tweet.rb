@@ -8,11 +8,11 @@ require_relative '../lib/gobi'
 
 def parse_option
   option = {
-    debug: false,
+    is_dry_run: false,
   }
 
   parser = OptionParser.new
-  parser.on('-n') {|v| option[:debug] = true }
+  parser.on('-n') {|v| option[:is_dry_run] = true }
   parser.parse!(ARGV)
 
   option
@@ -54,7 +54,7 @@ def main
     result = "#{result} #{keyword}" if keyword[0] == "#"
     puts "result: #{result} (#{result.length}文字)"
     if result.length < 80
-      if option[:debug]
+      if option[:is_dry_run]
         puts "update tweet [dry-run]"
       else
         puts "update tweet"
