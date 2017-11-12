@@ -34,7 +34,7 @@ def generate_text(config, client)
   client.search(query, lang: "ja", result_type: "recent").take(20).collect do |tweet|
     puts "@#{tweet.user.screen_name}: #{tweet.text}"
     if tweet.text =~ /@/
-      puts "[ignore] include mention text"
+      puts "\t>> ignored: include mention text"
     else
       mc.learn(tweet.text)
     end
