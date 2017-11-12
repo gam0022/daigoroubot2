@@ -1,6 +1,8 @@
-# daigoroubot
+# daigoroubot2
 
 他人のツイートから学習して発言するタイプのTwitterのBotです。
+
+- [大五郎（Ｕ＾ω＾）BOT](https://twitter.com/daigoroubot)
 
 語尾に「なのだ！」をつけるところがチャームポイントです。
 
