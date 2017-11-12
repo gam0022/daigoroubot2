@@ -20,6 +20,6 @@ end
 # URLや特殊記号(#,@)を取り除く
 # パーセントエンコーディングをデコードする
 def filter(text)
-  text.gsub(/(\n|https?:\S+|from https?:\S+|#|@)/, "").
+  text.gsub(/(\n|https?:\S+|from https?:\S+|#|＃|@|＠)/, "").
     gsub('&amp;', '&').gsub('&lt;', '<').gsub('&gt;', '>')
 end
