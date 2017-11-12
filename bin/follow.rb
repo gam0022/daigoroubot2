@@ -80,12 +80,13 @@ def main
       client.unfollow(id) if !option[:is_dry_run]
     end
 
-    puts
-    puts
   rescue Twitter::Error::TooManyRequests => error
+    # API制限の情報を表示
     pp error.rate_limit
-    exit
   end
+
+  puts
+  puts
 end
 
 main()
