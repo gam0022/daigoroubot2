@@ -31,10 +31,7 @@ class MarkovChain
     end
 
     @heads << words[0...@n]
-
-    words.each_cons(@n + 1) do |chain| 
-      @chains << chain
-    end
+    @chains.concat(words.each_cons(@n + 1).to_a)
   end
   
   # 文章を生成する
