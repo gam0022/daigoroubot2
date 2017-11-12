@@ -9,21 +9,19 @@ require_relative '../lib/gobi'
 def parse_option
   option = {
     is_dry_run: false,
+    text: nil,
   }
 
   parser = OptionParser.new
-  parser.on('-n') {|v| option[:is_dry_run] = true }
+  parser.on('-n', '--dry-run') {|v| option[:is_dry_run] = true }
+  parser.on('-t VAL', '--text VAL') {|v| option[:text] = v }
   parser.parse!(ARGV)
 
   option
 end
 
-def main
-  puts "#{Time.new}"
-
-  # init
-  config, client = get_config_and_client()
-  option = parse_option()
+def generate_text(config, client)
+  puts "#generate_text"
 
   # select keyword
   keyword = client.trends(id = config['woeid']).to_a.sample.name
@@ -54,14 +52,31 @@ def main
     result = "#{result} #{keyword}" if keyword[0] == "#"
     puts "result: #{result} (#{result.length}文字)"
     if result.length < 80
-      if option[:is_dry_run]
-        puts "update tweet [dry-run]"
-      else
-        puts "update tweet"
-        client.update(result)
-      end
-      break
+      return result
     end
+  end
+
+  # テキストの生成に失敗
+  return nil
+end
+
+def main
+  puts "#{Time.new}"
+
+  config, client = get_config_and_client()
+  option = parse_option()
+
+  text = option[:text] || generate_text(config, client)
+
+  if text
+    if option[:is_dry_run]
+      puts "update tweet[dry-run]: #{text}"
+    else
+      puts "update tweet: #{text}"
+      client.update(text)
+    end
+  else
+    puts "faild to update tweet..."
   end
 
   puts
