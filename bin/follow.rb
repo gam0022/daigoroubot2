@@ -48,6 +48,7 @@ def main
 
     friendships_outgoing = fetch_follower_ids(client, :friendships_outgoing)
     puts "friendships_outgoing_count: #{friendships_outgoing.size}"
+    puts
 
 
     # follow users
@@ -77,6 +78,9 @@ def main
       puts "unfollow: @#{user.screen_name}#{dry_run_text}"
       client.unfollow(id) if !option[:is_dry_run]
     end
+
+    puts
+    puts
   rescue Twitter::Error::TooManyRequests => error
     pp error.rate_limit
     exit
