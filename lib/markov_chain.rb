@@ -11,13 +11,6 @@ class MarkovChain
     @chains = []
   end
 
-  # URLや特殊記号(#,@)を取り除く
-  # パーセントエンコーディングをデコードする
-  def filter(text)
-    text.gsub(/(\n|https?:\S+|from https?:\S+|#|@)/, "").
-      gsub('&amp;', '&').gsub('&lt;', '<').gsub('&gt;', '>')
-  end
-
   # 文章を学習する
   def learn(text)
     text = filter(text)
@@ -31,7 +24,7 @@ class MarkovChain
     @heads << words[0...@n]
     @chains.concat(words.each_cons(@n + 1).to_a)
   end
-  
+
   # 文章を生成する
   def talk()
     prefix = @heads.sample
