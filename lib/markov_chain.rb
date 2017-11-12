@@ -22,7 +22,7 @@ class MarkovChain
     end
 
     @heads << words[0...@n]
-    @chains.concat(words.each_cons(@n + 1).to_a)
+    @chains += words.each_cons(@n + 1).to_a
   end
 
   # 文章を生成する
