@@ -75,6 +75,7 @@ def main
     # unfollow users
     new_unfollow = (config['users']['remove'] & friend_ids) | (friend_ids - follower_ids) - config['users']['follow']
     new_unfollow.each do |id|
+      user = client.user(id, skip_status: true)
       puts "unfollow: @#{user.screen_name}#{dry_run_text}"
       client.unfollow(id) if !option[:is_dry_run]
     end
