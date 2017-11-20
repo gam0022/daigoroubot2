@@ -51,9 +51,21 @@ def generate_text(config, client)
     result = gobi.translate(result)
     result = "#{result} #{keyword}" if keyword[0] == "#"
     puts "result: #{result} (#{result.length}文字)"
-    if result.length < 80
-      return result
+
+    # 凍結されそうな発言は控える
+    if result =~ /殺す|kill/
+      puts "\t>> faild: include violence words"
+      next
     end
+
+    # 長すぎる発言は控える
+    if result.length >= 80
+      puts "\t>> faild: too long text (over 80 chars)"
+      next
+    end
+
+    # テキストの生成に成功
+    return result
   end
 
   # テキストの生成に失敗
