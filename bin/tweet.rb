@@ -28,7 +28,7 @@ def generate_text(config, client)
   puts "keyword: #{keyword}"
 
   # learn
-  mc = MarkovChain.new(1)
+  mc = MarkovChain.new(2)
 
   query = "#{keyword} -rt -filter:links min_faves:0 min_retweets:0"
   client.search(query, lang: "ja", result_type: "recent").take(20).collect do |tweet|
