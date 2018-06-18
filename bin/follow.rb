@@ -55,15 +55,19 @@ def main
     new_follow = (config['users']['follow'] | follower_ids) - friend_ids - friendships_outgoing - config['users']['remove']
     new_follow_count = 0
     new_follow.each do |id|
-      user = client.user(id, skip_status: true)
+      begin
+        user = client.user(id, skip_status: true)
 
-      puts "follow: @#{user.screen_name}#{dry_run_text}"
-      client.follow(id) if !option[:is_dry_run]
-      new_follow_count += 1
+        puts "follow: @#{user.screen_name}#{dry_run_text}"
+        client.follow(id) if !option[:is_dry_run]
+        new_follow_count += 1
 
-      text = ["フォロー返したのだ！", "フォローありがとうなのだ！", "フォローしたのだ！"].sample
-      update_text = "@#{user.screen_name} #{user.name}、#{text}"
-      client.update(update_text) if !option[:is_dry_run]
+        text = ["フォロー返したのだ！", "フォローありがとうなのだ！", "フォローしたのだ！"].sample
+        update_text = "@#{user.screen_name} #{user.name}、#{text}"
+        client.update(update_text) if !option[:is_dry_run]
+      rescue Twitter::Error::Forbidden => e
+        puts "Skip follow User who has been suspended. (id: #{id}) (Twitter::Error::Forbidden)"
+      end
 
       # API制限回避のために、一度にフォローする上限は10人までとする
       if new_follow_count == 10
