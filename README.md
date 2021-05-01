@@ -15,7 +15,7 @@
 ```bash
 # 依存パッケージのインストール (非UTF-8のmecab-ipadicでは正常に動きません)
 apt update
-sudo apt-get install mecab mecab-ipadic-utf8
+sudo apt install mecab libmecab-dev mecab-ipadic-utf8
 
 git clone git@github.com:gam0022/daigoroubot2.git
 cd daigoroubot2
@@ -88,3 +88,25 @@ vim config.yaml
 
 - `-n`, `--dry-run`
   - ドライランです。フォロー・リムーブ対象のユーザの洗い出しだけを行います
+
+### cron
+
+```bash
+# タイムゾーンの変更
+sudo timedatectl set-timezone Asia/Tokyo
+
+# JSTへの変更を確認
+date
+Sat May  1 23:42:40 JST 2021
+```
+
+設定例
+
+```
+16 6-23,0-1 * * *                /home/gam0022/daigoroubot2/bin/tweet.sh
+0 2 * * *                       /home/gam0022/daigoroubot2/bin/tweet.sh --text "もう寝るのだ（Ｕ‐ω‐）...zzZZZ ~♪  #sleep"
+0 6 * * *                       /home/gam0022/daigoroubot2/bin/tweet.sh --text "起きたのだ（Ｕ＾ω＾）わんわんお！ #okita"
+0 0 1 1 *                       /home/gam0022/daigoroubot2/bin/tweet.sh --text "あけおめなのだ！今年もよろしくなのだ！"
+0 0 * * *                       /home/gam0022/daigoroubot2/bin/tweet.sh --text "よるほーなのだ！ #yoruho"
+*/10 6-23,0-1 * * *             /home/gam0022/daigoroubot2/bin/follow.sh
+```
