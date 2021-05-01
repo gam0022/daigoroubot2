@@ -14,6 +14,7 @@
 
 ```bash
 # 依存パッケージのインストール (非UTF-8のmecab-ipadicでは正常に動きません)
+apt update
 sudo apt-get install mecab mecab-ipadic-utf8
 
 git clone git@github.com:gam0022/daigoroubot2.git
