@@ -63,10 +63,11 @@ def main
         new_follow_count += 1
 
         text = ["フォロー返したのだ！", "フォローありがとうなのだ！", "フォローしたのだ！"].sample
-        update_text = "@#{user.screen_name} #{user.name}、#{text}"
+        # update_text = "@#{user.screen_name} #{user.name}、#{text}"
+        update_text = "@#{user.screen_name} #{text}"
 
         # 凍結防止のためにユーザーへの返信をしない
-        # client.update(update_text) if !option[:is_dry_run]
+        client.update(update_text) if !option[:is_dry_run]
       rescue Twitter::Error::Forbidden => e
         puts "Skip follow User who has been suspended. (id: #{id}) (Twitter::Error::Forbidden)"
       end
